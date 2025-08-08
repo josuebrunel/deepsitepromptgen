@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	ListenAddr = "127.0.0.1:8888"
+	ListenAddr = ":8080"
 )
 
 func envGetOrDflt(key, dflt string) string {

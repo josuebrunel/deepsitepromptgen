@@ -1,0 +1,29 @@
+services:
+    dev:
+      container_name: dspg-dev
+      tty: true
+      build:
+          context: .
+          dockerfile: Dockerfile
+          target: build
+      ports:
+          - "8291:8080"
+          - "8292:4000"
+      networks:
+        - dspg
+      extra_hosts:
+      - "host.docker.internal:host-gateway"
+      volumes:
+        - ./:/go/src/app/
+    dspg:
+      container_name: dspg
+      tty: true
+      build:
+          context: .
+          dockerfile: Dockerfile
+      ports:
+        - "8290:8080"
+      
+networks:
+  dspg:
+    driver: bridge
