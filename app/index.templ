@@ -1,0 +1,190 @@
+package app 
+
+import "strings"
+import "github.com/josuebrunel/gopkg/component"
+import "github.com/josuebrunel/gopkg/etr"
+
+templ Head() {
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Go Template Generator</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+		/>
+		<style>
+            .page-row {
+                display: flex;
+                gap: 0.5rem;
+                margin-bottom: 0.5rem;
+            }
+            .page-row input {
+                flex: 1;
+            }
+        </style>
+	</head>
+}
+
+templ LabelFor(name string) {
+	<label for={ strings.Title(name) }>
+		{ children... }
+	</label>
+}
+
+templ Input(attr templ.Attributes) {
+	<input { attr... }/>
+}
+
+templ InputWithLabel(name string, attr templ.Attributes) {
+	@LabelFor(name) {
+		@Input(attr)
+	}
+}
+
+templ TextArea(attr templ.Attributes) {
+	<textarea { attr... }></textarea>
+}
+
+templ TextAreaWithLabel(name string, attr templ.Attributes) {
+	@LabelFor(name) {
+		{ name }
+		@TextArea(attr)
+	}
+}
+
+templ PageButton(value string) {
+	<div class="page-row">
+		<input type="text" name="pages" value={ value } placeholder="Page name"/>
+		<button type="button" onclick="removePageField(this)">−</button>
+	</div>
+}
+
+templ Form() {
+	<form>
+		@component.InputCSRF(etr.GetCSRF(ctx))
+		@InputWithLabel("`Name", templ.Attributes{
+			"id":          "name",
+			"name":        "name",
+			"type":        "text",
+			"placeholder": "MyApp",
+			"required":    true,
+		})
+		@TextAreaWithLabel("description", templ.Attributes{
+			"id":          "description",
+			"name":        "description",
+			"placeholder": "description...",
+			"rows":        "4",
+			"required":    true,
+		})
+		@InputWithLabel("cssFramework", templ.Attributes{
+			"id":          "cssFramework",
+			"name":        "cssFramework",
+			"type":        "text",
+			"placeholder": "e.g. PicoCSS, Tailwind, Bootstrap",
+		})
+		@TextAreaWithLabel("instructions", templ.Attributes{
+			"id":          "instructions",
+			"name":        "instructions",
+			"placeholder": "Write any special instructions...",
+			"rows":        "4",
+		})
+		<fieldset>
+			<legend>Pages</legend>
+			<div id="pagesContainer">
+				@PageButton("Landing page with hero, cta and pricing")
+				@PageButton("Sign in and Sign up")
+				@PageButton("Dashboard")
+			</div>
+			<button type="button" onclick="addPageField()">+ Add Page</button>
+		</fieldset>
+		<button type="submit" hx-target="#content" hx-swap="innerHTML" hx-post="/">Generate</button>
+	</form>
+}
+
+templ InlineScript() {
+	<script>
+    function addPageField() {
+      const container = document.getElementById("pagesContainer");
+
+      const row = document.createElement("div");
+      row.className = "page-row";
+
+      const input = document.createElement("input");
+      input.type = "text";
+      input.name = "pages[]";
+      input.placeholder = "Page name";
+
+      const removeBtn = document.createElement("button");
+      removeBtn.type = "button";
+      removeBtn.textContent = "−";
+      removeBtn.onclick = function () {
+        removePageField(removeBtn);
+      };
+
+      row.appendChild(input);
+      row.appendChild(removeBtn);
+      container.appendChild(row);
+    }
+
+    function removePageField(button) {
+      const row = button.closest(".page-row");
+      row.remove();
+    }
+	// copy to clipboard
+	function copyToClipboard(elt) {
+		promptText = document.getElementById("prompt");
+        navigator.clipboard.writeText(promptText.textContent)
+          .then(() => {
+            elt.textContent = "Copied!";
+            setTimeout(() => this.textContent = "Copy to Clipboard", 2000);
+          })
+          .catch(err => {
+            console.error("Failed to copy: ", err);
+          });
+  	}
+
+	// return to homepage
+	function backToForm() {
+		window.location.href = "/";
+	}
+  </script>
+}
+
+templ Prompt(appName, prompt string) {
+	<h1>Deepsite Prompt for { appName } </h1>
+	<pre id="prompt">{ prompt }</pre>
+	<div role="group">
+		<button id="homeButton" onclick="backToForm()">
+			<i class="fas fa-home"></i>
+			Back to Form
+		</button>
+		<button id="copyButton" class="contrast" onclick="copyToClipboard(this)">
+			<i class="fas fa-copy"></i>
+			Copy to Clipboard
+		</button>
+	</div>
+}
+
+templ Layout() {
+	<html>
+		@Head()
+		<body>
+			<main class="container">
+				<div id="content">
+					<h1>Generate Deepsite Prompt</h1>
+					{ children... }
+				</div>
+			</main>
+			<script src="https://unpkg.com/htmx.org@latest"></script>
+		</body>
+	</html>
+}
+
+templ Index() {
+	@Layout() {
+		@Form()
+		@InlineScript()
+	}
+}
