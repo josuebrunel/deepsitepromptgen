@@ -31,11 +31,9 @@ Requirements:
 6. Optimize for SEO with meta tags, titles, and descriptions based on the application name and description.
 7. Ensure mobile-first responsiveness.
 8. If special instructions are given, integrate them thoughtfully into the design.
-
-Output the result as a single zipped folder containing:
-- HTML files for each page.
-- CSS file(s) (if custom styles are needed).
-- Any necessary JavaScript files.`
+9. Produce a single html page
+10. Emulate navigation between components with a show/hide javascript function
+`
 
 type WebsiteData struct {
 	Name         string   `json:"name" form:"name"`
