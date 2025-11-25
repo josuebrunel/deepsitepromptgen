@@ -33,6 +33,7 @@ Requirements:
 8. If special instructions are given, integrate them thoughtfully into the design.
 9. Produce a single html page
 10. Emulate navigation between components with a show/hide javascript function
+11. Add a notification system
 `
 
 type WebsiteData struct {
