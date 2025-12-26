@@ -62,7 +62,7 @@ templ PageButton(value string) {
 }
 
 templ Form() {
-	<form>
+	<form hx-target="#content" hx-swap="innerHTML" hx-post="/">
 		@component.InputCSRF(etr.GetCSRF(ctx))
 		@InputWithLabel("`Name", templ.Attributes{
 			"id":          "name",
@@ -78,12 +78,19 @@ templ Form() {
 			"rows":        "4",
 			"required":    true,
 		})
-		@InputWithLabel("cssFramework", templ.Attributes{
-			"id":          "cssFramework",
-			"name":        "cssFramework",
-			"type":        "text",
-			"placeholder": "e.g. PicoCSS, Tailwind, Bootstrap",
-		})
+		@LabelFor("cssFramework") {
+			@component.Select(templ.Attributes{
+				"id":       "cssFramework",
+				"name":     "cssFramework",
+				"required": true,
+			}, component.SelectOptions{
+				{ID: "daisyui", Value: "DaisyUI", Disabled: false},
+				{ID: "tailwind", Value: "Tailwind", Disabled: false},
+				{ID: "bootstrap", Value: "Bootstrap", Disabled: false},
+				{ID: "pico", Value: "PicoCSS", Disabled: false},
+				{ID: "bulma", Value: "Bulma", Disabled: false},
+			}, "daisyui")
+		}
 		@TextAreaWithLabel("instructions", templ.Attributes{
 			"id":          "instructions",
 			"name":        "instructions",
@@ -99,7 +106,7 @@ templ Form() {
 			</div>
 			<button type="button" onclick="addPageField()">+ Add Page</button>
 		</fieldset>
-		<button type="submit" hx-target="#content" hx-swap="innerHTML" hx-post="/">Generate</button>
+		<button type="submit">Generate</button>
 	</form>
 }
 

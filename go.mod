@@ -3,7 +3,7 @@ module dppg
 go 1.24.4
 
 require (
-	github.com/a-h/templ v0.3.924
+	github.com/a-h/templ v0.3.960
 	github.com/josuebrunel/gopkg/component v0.0.5
 	github.com/josuebrunel/gopkg/etr v0.0.2
 	github.com/josuebrunel/gopkg/xlog v0.0.1
