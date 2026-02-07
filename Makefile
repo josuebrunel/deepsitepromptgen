@@ -3,7 +3,6 @@ MAIN=cmd/main.go
 BIN=bin/${NAME}
 
 deps:
-	go get github.com/labstack/echo/v5@v5.0.0-20230722203903-ec5b858dab61
 	go install github.com/a-h/templ/cmd/templ@latest
 	go get github.com/a-h/templ@latest
 	go mod tidy

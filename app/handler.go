@@ -19,7 +19,7 @@ type WebsiteData struct {
 }
 
 func HandlerIndex() echo.HandlerFunc {
-	return func(c echo.Context) error {
+	return func(c *echo.Context) error {
 		if c.Request().Method == http.MethodGet {
 			return etr.Render(c, http.StatusOK, Index(), nil)
 		}

@@ -7,7 +7,6 @@ ENV     CGO_ENABLED=0
 RUN     mkdir /go/src/app
 WORKDIR /go/src/app
 ADD     . /go/src/app
-RUN     go get github.com/labstack/echo/v5@v5.0.0-20230722203903-ec5b858dab61
 RUN     make deps
 RUN     make build
 EXPOSE  8080 4000

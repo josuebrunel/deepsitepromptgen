@@ -2,6 +2,7 @@ package app
 
 import (
 	"log"
+	"net/http"
 	"os"
 
 	"github.com/labstack/echo/v5"
@@ -31,9 +32,15 @@ func New() App {
 
 func (a App) Run() {
 	e := echo.New()
-	e.Debug = true
-	e.Use(middleware.Logger())
-	e.Use(middleware.CORS())
+	e.Use(middleware.RequestID())
+	e.Use(middleware.RequestLogger())
+	e.Use(middleware.CORSWithConfig(
+		middleware.CORSConfig{
+			AllowOrigins: []string{"*"},
+			AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
+			AllowMethods: []string{http.MethodGet, http.MethodPost, http.MethodPut, http.MethodDelete, http.MethodOptions},
+		},
+	))
 	e.Use(middleware.Recover())
 	e.Use(middleware.CSRFWithConfig(middleware.CSRFConfig{
 		TokenLookup: "form:csrf,header:csrf",
