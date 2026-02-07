@@ -1,6 +1,5 @@
 package app 
 
-import "strings"
 import "github.com/josuebrunel/gopkg/component"
 import "github.com/josuebrunel/gopkg/etr"
 
@@ -12,7 +11,7 @@ templ Head() {
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
 		<link
 			rel="stylesheet"
-			href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+			href="https://cdn.jsdelivr.net/gh/josuebrunel/picodaisy@latest/pico-daisy.css"
 		/>
 		<style>
             .page-row {
@@ -28,7 +27,8 @@ templ Head() {
 }
 
 templ LabelFor(name string) {
-	<label for={ strings.Title(name) }>
+	<label for={ name }>
+		{ name }
 		{ children... }
 	</label>
 }
@@ -49,7 +49,6 @@ templ TextArea(attr templ.Attributes) {
 
 templ TextAreaWithLabel(name string, attr templ.Attributes) {
 	@LabelFor(name) {
-		{ name }
 		@TextArea(attr)
 	}
 }
@@ -64,21 +63,21 @@ templ PageButton(value string) {
 templ Form() {
 	<form hx-target="#content" hx-swap="innerHTML" hx-post="/">
 		@component.InputCSRF(etr.GetCSRF(ctx))
-		@InputWithLabel("`Name", templ.Attributes{
+		@InputWithLabel("Name", templ.Attributes{
 			"id":          "name",
 			"name":        "name",
 			"type":        "text",
 			"placeholder": "MyApp",
 			"required":    true,
 		})
-		@TextAreaWithLabel("description", templ.Attributes{
+		@TextAreaWithLabel("Description", templ.Attributes{
 			"id":          "description",
 			"name":        "description",
 			"placeholder": "description...",
 			"rows":        "4",
 			"required":    true,
 		})
-		@LabelFor("cssFramework") {
+		@LabelFor("CssFramework") {
 			@component.Select(templ.Attributes{
 				"id":       "cssFramework",
 				"name":     "cssFramework",
@@ -91,7 +90,7 @@ templ Form() {
 				{ID: "bulma", Value: "Bulma", Disabled: false},
 			}, "daisyui")
 		}
-		@TextAreaWithLabel("instructions", templ.Attributes{
+		@TextAreaWithLabel("Instructions", templ.Attributes{
 			"id":          "instructions",
 			"name":        "instructions",
 			"placeholder": "Write any special instructions...",
