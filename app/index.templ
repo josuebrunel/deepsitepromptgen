@@ -13,6 +13,7 @@ templ Head() {
 			rel="stylesheet"
 			href="https://cdn.jsdelivr.net/gh/josuebrunel/picodaisy@latest/pico-daisy.css"
 		/>
+		<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 		<style>
             .page-row {
                 display: flex;
@@ -53,13 +54,6 @@ templ TextAreaWithLabel(name string, attr templ.Attributes) {
 	}
 }
 
-templ PageButton(value string) {
-	<div class="page-row">
-		<input type="text" name="pages" value={ value } placeholder="Page name"/>
-		<button type="button" onclick="removePageField(this)">−</button>
-	</div>
-}
-
 templ Form() {
 	<form hx-target="#content" hx-swap="innerHTML" hx-post="/">
 		@component.InputCSRF(etr.GetCSRF(ctx))
@@ -96,79 +90,39 @@ templ Form() {
 			"placeholder": "Write any special instructions...",
 			"rows":        "4",
 		})
-		<fieldset>
+		<fieldset x-data="{ pages: ['Landing page with hero, cta and pricing', 'Sign in and Sign up', 'Dashboard'] }">
 			<legend>Pages</legend>
-			<div id="pagesContainer">
-				@PageButton("Landing page with hero, cta and pricing")
-				@PageButton("Sign in and Sign up")
-				@PageButton("Dashboard")
-			</div>
-			<button type="button" onclick="addPageField()">+ Add Page</button>
+			<template x-for="(page, index) in pages" :key="index">
+				<div class="page-row">
+					<input type="text" name="pages" x-model="pages[index]" placeholder="Page name"/>
+					<button type="button" @click="pages.splice(index, 1)">−</button>
+				</div>
+			</template>
+			<button type="button" @click="pages.push('')">+ Add Page</button>
 		</fieldset>
 		<button type="submit">Generate</button>
 	</form>
 }
 
-templ InlineScript() {
-	<script>
-    function addPageField() {
-      const container = document.getElementById("pagesContainer");
-
-      const row = document.createElement("div");
-      row.className = "page-row";
-
-      const input = document.createElement("input");
-      input.type = "text";
-      input.name = "pages";
-      input.placeholder = "Page name";
-
-      const removeBtn = document.createElement("button");
-      removeBtn.type = "button";
-      removeBtn.textContent = "−";
-      removeBtn.onclick = function () {
-        removePageField(removeBtn);
-      };
-
-      row.appendChild(input);
-      row.appendChild(removeBtn);
-      container.appendChild(row);
-    }
-
-    function removePageField(button) {
-      const row = button.closest(".page-row");
-      row.remove();
-    }
-	// copy to clipboard
-	function copyToClipboard(elt) {
-		promptText = document.getElementById("prompt");
-        navigator.clipboard.writeText(promptText.textContent)
-          .then(() => {
-            elt.textContent = "Copied!";
-            setTimeout(() => this.textContent = "Copy to Clipboard", 2000);
-          })
-          .catch(err => {
-            console.error("Failed to copy: ", err);
-          });
-  	}
-
-	// return to homepage
-	function backToForm() {
-		window.location.href = "/";
-	}
-  </script>
-}
-
 templ Prompt(appName, prompt string) {
 	<h1>Deepsite Prompt for { appName } </h1>
 	<pre id="prompt">{ prompt }</pre>
-	<div role="group">
-		<button id="homeButton" onclick="backToForm()">
+	<div role="group" x-data="{ copied: false }">
+		<button id="homeButton" @click="window.location.href = '/'">
 			<i class="fas fa-home"></i>
 			Back to Form
 		</button>
-		<button id="copyButton" class="contrast" onclick="copyToClipboard(this)">
-			<i class="fas fa-copy"></i>
-			Copy to Clipboard
+		<button
+			id="copyButton"
+			class="contrast"
+			@click="
+				navigator.clipboard.writeText(document.getElementById('prompt').textContent);
+				copied = true;
+				setTimeout(() => copied = false, 2000);
+			"
+		>
+			<i class="fas" :class="copied ? 'fa-check' : 'fa-copy'"></i>
+			<span x-text="copied ? 'Copied!' : 'Copy to Clipboard'"></span>
 		</button>
 	</div>
 }
@@ -191,6 +145,5 @@ templ Layout() {
 templ Index() {
 	@Layout() {
 		@Form()
-		@InlineScript()
 	}
 }
