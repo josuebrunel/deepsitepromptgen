@@ -1,4 +1,40 @@
-package app
+package prompt
+
+import (
+	"bytes"
+	"strings"
+	"text/template"
+)
+
+type WebsiteData struct {
+	Name         string   `json:"name" form:"name"`
+	Description  string   `json:"description" form:"description"`
+	CSSFramework string   `json:"cssFramework" form:"cssFramework"`
+	Instructions string   `json:"instructions" form:"instructions"`
+	Pages        []string `json:"pages" form:"pages"`
+}
+
+func Generate(data WebsiteData) (string, error) {
+	tpl, err := template.New("website").Parse(websitePrompt)
+	if err != nil {
+		return "", err
+	}
+
+	// Filter empty pages
+	var validPages []string
+	for _, p := range data.Pages {
+		if strings.TrimSpace(p) != "" {
+			validPages = append(validPages, p)
+		}
+	}
+	data.Pages = validPages
+
+	var buf bytes.Buffer
+	if err := tpl.Execute(&buf, data); err != nil {
+		return "", err
+	}
+	return buf.String(), nil
+}
 
 const websitePrompt = `
 You are a world-class UI/UX Designer and Frontend Architect known for building award-winning, accessible, and SEO-optimized web applications.

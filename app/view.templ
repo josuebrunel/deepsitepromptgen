@@ -1,0 +1,46 @@
+package app
+
+import (
+	"dppg/internal/ui"
+	"github.com/josuebrunel/gopkg/component"
+	"github.com/josuebrunel/gopkg/etr"
+)
+
+func getFormAction(signup bool) string {
+	if signup {
+		return "/auth/register"
+	}
+	return "/auth/login"
+}
+
+func getButtonText(signup bool) string {
+	if signup {
+		return "Sign Up"
+	}
+	return "Sign In"
+}
+
+templ SignInAndSignUp(signup bool) {
+	@component.Form(templ.Attributes{"method": "post", "action": getFormAction(signup)}) {
+		@component.InputCSRF(etr.GetCSRF(ctx))
+		@component.Input(templ.Attributes{"type": "email", "name": "email", "placeholder": "Email"})
+		@component.Input(templ.Attributes{"type": "password", "name": "password", "placeholder": "Password"})
+		if signup {
+			@component.Input(templ.Attributes{"type": "password", "name": "password_confirm", "placeholder": "Password Confirmation"})
+		}
+		@component.ButtonSubmit(getButtonText(signup), templ.Attributes{"class": "bg-primary"})
+		// Github Oauth2
+		<a role="button" href="/auth/oauth2/github/login">Sign In with Github</a>
+		if !signup {
+			<a href="/auth/register">Sign Up</a>
+		} else {
+			<a href="/auth/login">Sign In</a>
+		}
+	}
+}
+
+templ Index(signup bool) {
+	@ui.Layout() {
+		@SignInAndSignUp(signup)
+	}
+}

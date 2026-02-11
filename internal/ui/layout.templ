@@ -1,0 +1,65 @@
+package ui 
+
+import (
+	"github.com/josuebrunel/ezauth/pkg/handler"
+	"github.com/josuebrunel/gopkg/component"
+	"github.com/josuebrunel/gopkg/etr"
+)
+
+templ Head() {
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Go Template Generator</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/gh/josuebrunel/picodaisy@latest/pico-daisy.css"
+		/>
+		<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+		<style>
+            .page-row {
+                display: flex;
+                gap: 0.5rem;
+                margin-bottom: 0.5rem;
+            }
+            .page-row input {
+                flex: 1;
+            }
+        </style>
+	</head>
+}
+
+templ Navbar() {
+	<nav class="container-fluid">
+		<ul>
+			<li><strong>DeepSitePrompt</strong></li>
+		</ul>
+		<ul>
+			if _, err := handler.GetUserID(ctx); err == nil {
+				<li><a href="/auth/logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
+				<form id="logout-form" action="/auth/logout" method="POST" style="display: none;">
+					@component.InputCSRF(etr.GetCSRF(ctx))
+				</form>
+			} else {
+				<li><a href="/auth/login">Login</a></li>
+				<li><a href="/auth/register" role="button">Register</a></li>
+			}
+		</ul>
+	</nav>
+}
+
+templ Layout() {
+	<html>
+		@Head()
+		<body>
+			@Navbar()
+			<main class="container">
+				<div id="content">
+					{ children... }
+				</div>
+			</main>
+			<script src="https://unpkg.com/htmx.org@latest"></script>
+		</body>
+	</html>
+}

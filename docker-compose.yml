@@ -1,29 +1,71 @@
 services:
-    dev:
-      container_name: dspg-dev
-      tty: true
-      build:
-          context: .
-          dockerfile: Dockerfile
-          target: build
-      ports:
-          - "8291:8080"
-          - "8292:4000"
-      networks:
-        - dspg
-      extra_hosts:
+  dev:
+    container_name: dspg-dev
+    tty: true
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: build
+    ports:
+      - "8291:8080"
+      - "8292:4000"
+    networks:
+      - dspg
+    extra_hosts:
       - "host.docker.internal:host-gateway"
-      volumes:
-        - ./:/go/src/app/
-    dspg:
-      container_name: dspg
-      tty: true
-      build:
-          context: .
-          dockerfile: Dockerfile
-      ports:
-        - "8290:8080"
-      
+    volumes:
+      - ./:/go/src/app/
+    depends_on:
+      - postgres
+    environment:
+      - DB_DSN=postgres://dspg:dspg@postgres:5432/dspg?sslmode=disable
+      - EZAUTH_API_KEY=my-secret-key
+      - EZAUTH_JWT_SECRET=my-secret-key
+      - EZAUTH_DB_DIALECT=postgres
+      - EZAUTH_DB_DSN=postgres://dspg:dspg@postgres:5432/dspg?sslmode=disable
+      - EZAUTH_LOGIN_PAGE_URL=/
+      - EZAUTH_REGISTER_PAGE_URL=/signup
+      - EZAUTH_REDIRECT_AFTER_LOGIN_URL=/prompts
+      - EZAUTH_REDIRECT_AFTER_REGISTER_URL=/
+
+  dspg:
+    container_name: dspg
+    tty: true
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8290:8080"
+    networks:
+      - dspg
+    depends_on:
+      - postgres
+    environment:
+      - DB_DRIVER=pgx
+      - DB_host=postgres
+      - DB_PORT=5432
+      - DB_USER=dspg
+      - DB_PASSWORD=dspg
+      - DB_NAME=dspg
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: dspg-postgres
+    environment:
+      - POSTGRES_USER=dspg
+      - POSTGRES_PASSWORD=dspg
+      - POSTGRES_DB=dspg
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - "8293:5432"
+    networks:
+      - dspg
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
 networks:
   dspg:
     driver: bridge
+
+volumes:
+  postgres_data:

@@ -31,3 +31,19 @@ build: tidy templ
 
 run: build
 	./${BIN}
+
+migration.init:
+	go install github.com/pressly/goose/v3/cmd/goose@latest
+
+migration.create:
+	@read -p "Enter migration name: " name; \
+	goose -dir db/migrations create $${name} sql
+
+migration.up:
+	goose -dir db/migrations postgres "host=$${DB_HOST} user=$${DB_USER} password=$${DB_PASSWORD} dbname=$${DB_NAME} port=$${DB_PORT} sslmode=disable" up
+
+migration.down:
+	goose -dir db/migrations postgres "host=$${DB_HOST} user=$${DB_USER} password=$${DB_PASSWORD} dbname=$${DB_NAME} port=$${DB_PORT} sslmode=disable" down
+
+migration.status:
+	goose -dir db/migrations postgres "host=$${DB_HOST} user=$${DB_USER} password=$${DB_PASSWORD} dbname=$${DB_NAME} port=$${DB_PORT} sslmode=disable" status
