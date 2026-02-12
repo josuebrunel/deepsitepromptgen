@@ -21,22 +21,63 @@ func getButtonText(signup bool) string {
 }
 
 templ SignInAndSignUp(signup bool) {
-	@component.Form(templ.Attributes{"method": "post", "action": getFormAction(signup)}) {
-		@component.InputCSRF(etr.GetCSRF(ctx))
-		@component.Input(templ.Attributes{"type": "email", "name": "email", "placeholder": "Email"})
-		@component.Input(templ.Attributes{"type": "password", "name": "password", "placeholder": "Password"})
-		if signup {
-			@component.Input(templ.Attributes{"type": "password", "name": "password_confirm", "placeholder": "Password Confirmation"})
-		}
-		@component.ButtonSubmit(getButtonText(signup), templ.Attributes{"class": "bg-primary"})
-		// Github Oauth2
-		<a role="button" href="/auth/oauth2/github/login">Sign In with Github</a>
-		if !signup {
-			<a href="/auth/register">Sign Up</a>
-		} else {
-			<a href="/auth/login">Sign In</a>
-		}
-	}
+	<div class="hero min-h-[80vh] bg-base-200">
+		<div class="hero-content flex-col lg:flex-row-reverse">
+			<div class="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+				<div class="card-body">
+					<h2 class="card-title text-2xl font-bold justify-center mb-4">
+						if signup {
+							Create Account
+						} else {
+							Welcome Back
+						}
+					</h2>
+					@component.Form(templ.Attributes{"method": "post", "action": getFormAction(signup), "class": "form-control w-full space-y-4"}) {
+						@component.InputCSRF(etr.GetCSRF(ctx))
+						<div class="form-control">
+							<label class="label" for="email">
+								<span class="label-text font-bold">Email</span>
+							</label>
+							@component.Input(templ.Attributes{"type": "email", "name": "email", "placeholder": "your@email.com", "required": true, "class": "input input-bordered"})
+						</div>
+						<div class="form-control">
+							<label class="label" for="password">
+								<span class="label-text font-bold">Password</span>
+							</label>
+							@component.Input(templ.Attributes{"type": "password", "name": "password", "placeholder": "••••••••", "required": true, "class": "input input-bordered"})
+						</div>
+						if signup {
+							<div class="form-control">
+								<label class="label" for="password_confirm">
+									<span class="label-text font-bold">Confirm Password</span>
+								</label>
+								@component.Input(templ.Attributes{"type": "password", "name": "password_confirm", "placeholder": "••••••••", "required": true, "class": "input input-bordered"})
+							</div>
+						}
+						<div class="form-control mt-6">
+							<button type="submit" class="btn btn-primary w-full">
+								{ getButtonText(signup) }
+							</button>
+						</div>
+					}
+					<div class="divider">OR</div>
+					// Github Oauth2
+					<div class="form-control">
+						<a role="button" href="/auth/oauth2/github/login" class="btn btn-outline w-full">
+							<i class="fab fa-github mr-2"></i> Continue with GitHub
+						</a>
+					</div>
+					<div class="text-center mt-4 text-sm">
+						if !signup {
+							<span>Don't have an account? <a href="/auth/register" class="link link-primary">Sign Up</a></span>
+						} else {
+							<span>Already have an account? <a href="/auth/login" class="link link-primary">Sign In</a></span>
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 }
 
 templ Index(signup bool) {

@@ -35,7 +35,7 @@ func Head() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<head><meta charset=\"UTF-8\"><title>Go Template Generator</title><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css\"><link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/gh/josuebrunel/picodaisy@latest/pico-daisy.css\"><script defer src=\"https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js\"></script><style>\n            .page-row {\n                display: flex;\n                gap: 0.5rem;\n                margin-bottom: 0.5rem;\n            }\n            .page-row input {\n                flex: 1;\n            }\n        </style></head>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<head><meta charset=\"UTF-8\"><title>DeepSitePrompt</title><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css\"><link href=\"https://cdn.jsdelivr.net/npm/daisyui@4.12.23/dist/full.min.css\" rel=\"stylesheet\" type=\"text/css\"><script src=\"https://cdn.tailwindcss.com\"></script><link href=\"https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap\" rel=\"stylesheet\"><script defer src=\"https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js\"></script><style>\n\t\t\tbody {\n\t\t\t\tfont-family: 'Open Sans', system-ui, -apple-system, sans-serif;\n\t\t\t}\n            .page-row {\n                display: flex;\n                gap: 0.5rem;\n                margin-bottom: 0.5rem;\n                align-items: center;\n            }\n            .page-row input {\n                flex: 1;\n            }\n        </style></head>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -64,12 +64,12 @@ func Navbar() templ.Component {
 			templ_7745c5c3_Var2 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<nav class=\"container-fluid\"><ul><li><strong>DeepSitePrompt</strong></li></ul><ul>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<div class=\"navbar bg-base-100 shadow-md\"><div class=\"navbar-start\"><a href=\"/\" class=\"btn btn-ghost text-xl text-primary font-bold\"><i class=\"fas fa-layer-group mr-2\"></i> DeepSitePrompt</a></div><div class=\"navbar-end\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		if _, err := handler.GetUserID(ctx); err == nil {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<li><a href=\"/auth/logout\" onclick=\"event.preventDefault(); document.getElementById('logout-form').submit();\">Logout</a></li><form id=\"logout-form\" action=\"/auth/logout\" method=\"POST\" style=\"display: none;\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<div class=\"dropdown dropdown-end\"><div tabindex=\"0\" role=\"button\" class=\"btn btn-ghost btn-circle avatar placeholder\"><div class=\"bg-neutral text-neutral-content rounded-full w-10\"><span class=\"text-xs\"><i class=\"fas fa-user\"></i></span></div></div><ul tabindex=\"0\" class=\"menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52\"><li><a href=\"/prompts\">My Prompts</a></li><li><a href=\"/auth/logout\" onclick=\"event.preventDefault(); document.getElementById('logout-form').submit();\">Logout</a></li></ul></div><form id=\"logout-form\" action=\"/auth/logout\" method=\"POST\" style=\"display: none;\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -82,12 +82,12 @@ func Navbar() templ.Component {
 				return templ_7745c5c3_Err
 			}
 		} else {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<li><a href=\"/auth/login\">Login</a></li><li><a href=\"/auth/register\" role=\"button\">Register</a></li>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<a href=\"/auth/login\" class=\"btn btn-ghost\">Login</a> <a href=\"/auth/register\" class=\"btn btn-primary\">Register</a>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</ul></nav>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -124,7 +124,7 @@ func Layout() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "<body>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "<body class=\"bg-base-200 min-h-screen\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -132,7 +132,7 @@ func Layout() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<main class=\"container\"><div id=\"content\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<main class=\"container mx-auto px-4 py-8\"><div id=\"content\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
