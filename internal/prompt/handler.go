@@ -24,8 +24,7 @@ func NewHandler(auth *ezauth.EzAuth, repo *repository.Repository) *Handler {
 func Mount(e *echo.Echo, auth *ezauth.EzAuth, repo *repository.Repository) {
 	h := NewHandler(auth, repo)
 	g := e.Group("/prompts",
-		echo.WrapMiddleware(auth.Handler.Session.LoadAndSave),
-		echo.WrapMiddleware(auth.LoadUserMiddleware),
+		echo.WrapMiddleware(auth.SessionMiddleware),
 		echo.WrapMiddleware(auth.LoginRequiredMiddleware),
 	)
 

@@ -8,7 +8,7 @@ require (
 	github.com/a-h/templ v0.3.977
 	github.com/gofrs/uuid/v5 v5.4.0
 	github.com/jackc/pgx/v5 v5.8.0
-	github.com/josuebrunel/ezauth v0.5.1
+	github.com/josuebrunel/ezauth v0.5.2
 	github.com/josuebrunel/gopkg/component v0.0.5
 	github.com/josuebrunel/gopkg/etr v0.1.0
 	github.com/josuebrunel/gopkg/xenv v0.0.1
