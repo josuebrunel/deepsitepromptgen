@@ -49,7 +49,7 @@ func SignInAndSignUp(signup bool) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"hero min-h-[80vh] bg-base-200\"><div class=\"hero-content flex-col lg:flex-row-reverse\"><div class=\"card shrink-0 w-full max-w-sm shadow-2xl bg-base-100\"><div class=\"card-body\"><h2 class=\"card-title text-2xl font-bold justify-center mb-4\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div style=\"display: flex; justify-content: center; align-items: center; min-height: 80vh;\"><article style=\"width: 100%; max-width: 400px; padding: 2rem;\"><header style=\"text-align: center; border-bottom: none; padding-bottom: 0;\"><h2 style=\"font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -64,7 +64,7 @@ func SignInAndSignUp(signup bool) templ.Component {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</h2>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</h2></header>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -84,79 +84,79 @@ func SignInAndSignUp(signup bool) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, " <div class=\"form-control\"><label class=\"label\" for=\"email\"><span class=\"label-text font-bold\">Email</span></label>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, " <label>Email")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = component.Input(templ.Attributes{"type": "email", "name": "email", "placeholder": "your@email.com", "required": true, "class": "input input-bordered"}).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = component.Input(templ.Attributes{"type": "email", "name": "email", "placeholder": "your@email.com", "required": true}).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</div><div class=\"form-control\"><label class=\"label\" for=\"password\"><span class=\"label-text font-bold\">Password</span></label>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</label> <label>Password")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = component.Input(templ.Attributes{"type": "password", "name": "password", "placeholder": "••••••••", "required": true, "class": "input input-bordered"}).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = component.Input(templ.Attributes{"type": "password", "name": "password", "placeholder": "••••••••", "required": true}).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</div>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</label> ")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			if signup {
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "<div class=\"form-control\"><label class=\"label\" for=\"password_confirm\"><span class=\"label-text font-bold\">Confirm Password</span></label>")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "<label>Confirm Password")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				templ_7745c5c3_Err = component.Input(templ.Attributes{"type": "password", "name": "password_confirm", "placeholder": "••••••••", "required": true, "class": "input input-bordered"}).Render(ctx, templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = component.Input(templ.Attributes{"type": "password", "name": "password_confirm", "placeholder": "••••••••", "required": true}).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "</div>")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "</label>")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, " <div class=\"form-control mt-6\"><button type=\"submit\" class=\"btn btn-primary w-full\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, " <button type=\"submit\" style=\"width: 100%; margin-top: 1rem;\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var3 string
 			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(getButtonText(signup))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/view.templ`, Line: 59, Col: 31}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/view.templ`, Line: 52, Col: 28}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "</button></div>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "</button>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			return nil
 		})
-		templ_7745c5c3_Err = component.Form(templ.Attributes{"method": "post", "action": getFormAction(signup), "class": "form-control w-full space-y-4"}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = component.Form(templ.Attributes{"method": "post", "action": getFormAction(signup)}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "<div class=\"divider\">OR</div><div class=\"form-control\"><a role=\"button\" href=\"/auth/oauth2/github/login\" class=\"btn btn-outline w-full\"><i class=\"fab fa-github mr-2\"></i> Continue with GitHub</a></div><div class=\"text-center mt-4 text-sm\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "<div style=\"text-align: center; margin: 1.5rem 0; position: relative;\"><hr style=\"margin: 0; border-color: var(--pico-muted-border-color);\"><span style=\"background: var(--pico-card-background-color); padding: 0 0.5rem; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--pico-muted-color); font-size: 0.875rem;\">OR</span></div><a role=\"button\" href=\"/auth/oauth2/github/login\" class=\"secondary outline\" style=\"width: 100%; margin-bottom: 1rem;\"><i class=\"fab fa-github margin-right-2\"></i> Continue with GitHub</a><footer style=\"text-align: center; border-top: none; padding-top: 0; font-size: 0.875rem;\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		if !signup {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "<span>Don't have an account? <a href=\"/auth/register\" class=\"link link-primary\">Sign Up</a></span>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "<span>Don't have an account? <a href=\"/auth/register\">Sign Up</a></span>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		} else {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "<span>Already have an account? <a href=\"/auth/login\" class=\"link link-primary\">Sign In</a></span>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "<span>Already have an account? <a href=\"/auth/login\">Sign In</a></span>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "</div></div></div></div></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "</footer></article></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

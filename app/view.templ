@@ -21,62 +21,53 @@ func getButtonText(signup bool) string {
 }
 
 templ SignInAndSignUp(signup bool) {
-	<div class="hero min-h-[80vh] bg-base-200">
-		<div class="hero-content flex-col lg:flex-row-reverse">
-			<div class="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-				<div class="card-body">
-					<h2 class="card-title text-2xl font-bold justify-center mb-4">
-						if signup {
-							Create Account
-						} else {
-							Welcome Back
-						}
-					</h2>
-					@component.Form(templ.Attributes{"method": "post", "action": getFormAction(signup), "class": "form-control w-full space-y-4"}) {
-						@component.InputCSRF(etr.GetCSRF(ctx))
-						<div class="form-control">
-							<label class="label" for="email">
-								<span class="label-text font-bold">Email</span>
-							</label>
-							@component.Input(templ.Attributes{"type": "email", "name": "email", "placeholder": "your@email.com", "required": true, "class": "input input-bordered"})
-						</div>
-						<div class="form-control">
-							<label class="label" for="password">
-								<span class="label-text font-bold">Password</span>
-							</label>
-							@component.Input(templ.Attributes{"type": "password", "name": "password", "placeholder": "••••••••", "required": true, "class": "input input-bordered"})
-						</div>
-						if signup {
-							<div class="form-control">
-								<label class="label" for="password_confirm">
-									<span class="label-text font-bold">Confirm Password</span>
-								</label>
-								@component.Input(templ.Attributes{"type": "password", "name": "password_confirm", "placeholder": "••••••••", "required": true, "class": "input input-bordered"})
-							</div>
-						}
-						<div class="form-control mt-6">
-							<button type="submit" class="btn btn-primary w-full">
-								{ getButtonText(signup) }
-							</button>
-						</div>
+	<div style="display: flex; justify-content: center; align-items: center; min-height: 80vh;">
+		<article style="width: 100%; max-width: 400px; padding: 2rem;">
+			<header style="text-align: center; border-bottom: none; padding-bottom: 0;">
+				<h2 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;">
+					if signup {
+						Create Account
+					} else {
+						Welcome Back
 					}
-					<div class="divider">OR</div>
-					// Github Oauth2
-					<div class="form-control">
-						<a role="button" href="/auth/oauth2/github/login" class="btn btn-outline w-full">
-							<i class="fab fa-github mr-2"></i> Continue with GitHub
-						</a>
-					</div>
-					<div class="text-center mt-4 text-sm">
-						if !signup {
-							<span>Don't have an account? <a href="/auth/register" class="link link-primary">Sign Up</a></span>
-						} else {
-							<span>Already have an account? <a href="/auth/login" class="link link-primary">Sign In</a></span>
-						}
-					</div>
-				</div>
+				</h2>
+			</header>
+			@component.Form(templ.Attributes{"method": "post", "action": getFormAction(signup)}) {
+				@component.InputCSRF(etr.GetCSRF(ctx))
+				<label>
+					Email
+					@component.Input(templ.Attributes{"type": "email", "name": "email", "placeholder": "your@email.com", "required": true})
+				</label>
+				<label>
+					Password
+					@component.Input(templ.Attributes{"type": "password", "name": "password", "placeholder": "••••••••", "required": true})
+				</label>
+				if signup {
+					<label>
+						Confirm Password
+						@component.Input(templ.Attributes{"type": "password", "name": "password_confirm", "placeholder": "••••••••", "required": true})
+					</label>
+				}
+				<button type="submit" style="width: 100%; margin-top: 1rem;">
+					{ getButtonText(signup) }
+				</button>
+			}
+			<div style="text-align: center; margin: 1.5rem 0; position: relative;">
+				<hr style="margin: 0; border-color: var(--pico-muted-border-color);"/>
+				<span style="background: var(--pico-card-background-color); padding: 0 0.5rem; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--pico-muted-color); font-size: 0.875rem;">OR</span>
 			</div>
-		</div>
+			// Github Oauth2
+			<a role="button" href="/auth/oauth2/github/login" class="secondary outline" style="width: 100%; margin-bottom: 1rem;">
+				<i class="fab fa-github margin-right-2"></i> Continue with GitHub
+			</a>
+			<footer style="text-align: center; border-top: none; padding-top: 0; font-size: 0.875rem;">
+				if !signup {
+					<span>Don't have an account? <a href="/auth/register">Sign Up</a></span>
+				} else {
+					<span>Already have an account? <a href="/auth/login">Sign In</a></span>
+				}
+			</footer>
+		</article>
 	</div>
 }
 

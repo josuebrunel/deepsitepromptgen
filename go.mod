@@ -8,7 +8,7 @@ require (
 	github.com/a-h/templ v0.3.977
 	github.com/gofrs/uuid/v5 v5.4.0
 	github.com/jackc/pgx/v5 v5.8.0
-	github.com/josuebrunel/ezauth v0.5.2
+	github.com/josuebrunel/ezauth v0.5.4
 	github.com/josuebrunel/gopkg/component v0.0.5
 	github.com/josuebrunel/gopkg/etr v0.1.0
 	github.com/josuebrunel/gopkg/xenv v0.0.1
@@ -21,7 +21,7 @@ require (
 require (
 	cloud.google.com/go/compute/metadata v0.9.0 // indirect
 	filippo.io/csrf v0.2.1 // indirect
-	filippo.io/edwards25519 v1.1.0 // indirect
+	filippo.io/edwards25519 v1.2.0 // indirect
 	github.com/KyleBanks/depth v1.2.1 // indirect
 	github.com/aarondl/opt v0.0.0-20250607033636-982744e1bd65 // indirect
 	github.com/alexedwards/scs/v2 v2.9.0 // indirect
@@ -58,7 +58,7 @@ require (
 	go.uber.org/multierr v1.11.0 // indirect
 	go.yaml.in/yaml/v3 v3.0.4 // indirect
 	golang.org/x/crypto v0.48.0 // indirect
-	golang.org/x/exp v0.0.0-20260212183809-81e46e3db34a // indirect
+	golang.org/x/exp v0.0.0-20260218203240-3dfff04db8fa // indirect
 	golang.org/x/mod v0.33.0 // indirect
 	golang.org/x/net v0.50.0 // indirect
 	golang.org/x/oauth2 v0.35.0 // indirect
@@ -67,8 +67,8 @@ require (
 	golang.org/x/text v0.34.0 // indirect
 	golang.org/x/time v0.14.0 // indirect
 	golang.org/x/tools v0.42.0 // indirect
-	modernc.org/libc v1.67.7 // indirect
+	modernc.org/libc v1.68.0 // indirect
 	modernc.org/mathutil v1.7.1 // indirect
 	modernc.org/memory v1.11.0 // indirect
-	modernc.org/sqlite v1.45.0 // indirect
+	modernc.org/sqlite v1.46.1 // indirect
 )

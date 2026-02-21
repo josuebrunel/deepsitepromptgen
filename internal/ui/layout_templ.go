@@ -9,7 +9,7 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
-	"github.com/josuebrunel/ezauth/pkg/handler"
+	"github.com/josuebrunel/ezauth"
 	"github.com/josuebrunel/gopkg/component"
 	"github.com/josuebrunel/gopkg/etr"
 )
@@ -35,7 +35,7 @@ func Head() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<head><meta charset=\"UTF-8\"><title>DeepSitePrompt</title><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css\"><link href=\"https://cdn.jsdelivr.net/npm/daisyui@4.12.23/dist/full.min.css\" rel=\"stylesheet\" type=\"text/css\"><script src=\"https://cdn.tailwindcss.com\"></script><link href=\"https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap\" rel=\"stylesheet\"><script defer src=\"https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js\"></script><style>\n\t\t\tbody {\n\t\t\t\tfont-family: 'Open Sans', system-ui, -apple-system, sans-serif;\n\t\t\t}\n            .page-row {\n                display: flex;\n                gap: 0.5rem;\n                margin-bottom: 0.5rem;\n                align-items: center;\n            }\n            .page-row input {\n                flex: 1;\n            }\n        </style></head>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<head><meta charset=\"UTF-8\"><title>DeepSitePrompt</title><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css\"><link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css\"><link href=\"https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap\" rel=\"stylesheet\"><script defer src=\"https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js\"></script><style>\n\t\t\t:root {\n\t\t\t\t/* DaisyUI Flair Variables */\n\t\t\t\t--pico-font-family: 'Open Sans', system-ui, -apple-system, sans-serif;\n\t\t\t\t--pico-border-radius: 0.75rem;\n\t\t\t\t--pico-primary: #4f46e5;\n\t\t\t\t--pico-primary-hover: #4338ca;\n\t\t\t\t--pico-primary-focus: rgba(79, 70, 229, 0.2);\n\t\t\t\t--pico-del-color: #ef4444; /* red-500 equivalent */\n\t\t\t}\n\t\t\t\n\t\t\t/* Global soft background similar to bg-base-200 */\n\t\t\tbody {\n\t\t\t\tbackground-color: var(--pico-background-color);\n\t\t\t\t/* Slightly darker background for depth if needed, here relying on Pico's default */\n\t\t\t}\n\t\t\t\n\t\t\t/* DaisyUI Card look for articles */\n\t\t\tarticle {\n\t\t\t\tbox-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);\n\t\t\t\tborder: 1px solid var(--pico-muted-border-color);\n\t\t\t\tmargin-bottom: var(--pico-spacing);\n\t\t\t}\n\n\t\t\t/* Navbar styling */\n\t\t\tnav {\n\t\t\t\tborder-bottom: 1px solid var(--pico-muted-border-color);\n\t\t\t\tbackground-color: var(--pico-card-background-color);\n\t\t\t\tpadding: 0.5rem var(--pico-spacing);\n\t\t\t\tbox-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); /* shadow-md equivalent */\n\t\t\t\tmargin-bottom: calc(var(--pico-spacing) * 2);\n\t\t\t}\n\t\t\t\n\t\t\tnav .brand {\n\t\t\t\tfont-weight: 800;\n\t\t\t\tfont-size: 1.25rem;\n\t\t\t\tcolor: var(--pico-primary);\n\t\t\t\ttext-decoration: none;\n\t\t\t}\n\t\t\t\n\t\t\t/* AlpineJS pages row fix */\n\t\t\t.page-row {\n\t\t\t\tdisplay: flex;\n\t\t\t\tgap: 0.5rem;\n\t\t\t\tmargin-bottom: 0.5rem;\n\t\t\t\talign-items: center;\n\t\t\t}\n\t\t\t.page-row input {\n\t\t\t\tflex: 1;\n\t\t\t\tmargin-bottom: 0;\n\t\t\t}\n        </style></head>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -64,12 +64,12 @@ func Navbar() templ.Component {
 			templ_7745c5c3_Var2 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<div class=\"navbar bg-base-100 shadow-md\"><div class=\"navbar-start\"><a href=\"/\" class=\"btn btn-ghost text-xl text-primary font-bold\"><i class=\"fas fa-layer-group mr-2\"></i> DeepSitePrompt</a></div><div class=\"navbar-end\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<nav><ul><li><a href=\"/\" class=\"brand\"><i class=\"fas fa-layer-group margin-right-2\"></i> DeepSitePrompt</a></li></ul><ul>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		if _, err := handler.GetUserID(ctx); err == nil {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<div class=\"dropdown dropdown-end\"><div tabindex=\"0\" role=\"button\" class=\"btn btn-ghost btn-circle avatar placeholder\"><div class=\"bg-neutral text-neutral-content rounded-full w-10\"><span class=\"text-xs\"><i class=\"fas fa-user\"></i></span></div></div><ul tabindex=\"0\" class=\"menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52\"><li><a href=\"/prompts\">My Prompts</a></li><li><a href=\"/auth/logout\" onclick=\"event.preventDefault(); document.getElementById('logout-form').submit();\">Logout</a></li></ul></div><form id=\"logout-form\" action=\"/auth/logout\" method=\"POST\" style=\"display: none;\">")
+		if _, err := ezauth.GetUserID(ctx); err == nil {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<li><details class=\"dropdown\"><summary role=\"button\" class=\"outline\">Account</summary><ul dir=\"rtl\"><li><a href=\"/prompts\">My Prompts</a></li><li><a href=\"/auth/logout\" onclick=\"event.preventDefault(); document.getElementById('logout-form').submit();\">Logout</a></li></ul></details></li><form id=\"logout-form\" action=\"/auth/logout\" method=\"POST\" style=\"display: none;\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -82,12 +82,12 @@ func Navbar() templ.Component {
 				return templ_7745c5c3_Err
 			}
 		} else {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<a href=\"/auth/login\" class=\"btn btn-ghost\">Login</a> <a href=\"/auth/register\" class=\"btn btn-primary\">Register</a>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<li><a href=\"/auth/login\" class=\"secondary\">Login</a></li><li><a href=\"/auth/register\" role=\"button\">Register</a></li>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</div></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</ul></nav>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -124,7 +124,7 @@ func Layout() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "<body class=\"bg-base-200 min-h-screen\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "<body>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -132,7 +132,7 @@ func Layout() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<main class=\"container mx-auto px-4 py-8\"><div id=\"content\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<main class=\"container\"><div id=\"content\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

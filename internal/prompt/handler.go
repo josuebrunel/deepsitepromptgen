@@ -6,7 +6,6 @@ import (
 
 	"github.com/gofrs/uuid/v5"
 	"github.com/josuebrunel/ezauth"
-	ezhandler "github.com/josuebrunel/ezauth/pkg/handler"
 	"github.com/josuebrunel/gopkg/etr"
 	"github.com/josuebrunel/gopkg/xlog"
 	"github.com/labstack/echo/v5"
@@ -97,7 +96,7 @@ func (h *Handler) Create() echo.HandlerFunc {
 
 func (h *Handler) View() echo.HandlerFunc {
 	return func(c *echo.Context) error {
-		userID, err := ezhandler.GetUserID(c.Request().Context())
+		userID, err := h.Auth.GetUserID(c.Request().Context())
 		if err != nil || userID == "" {
 			return c.Redirect(http.StatusFound, "/auth/login")
 		}
@@ -123,7 +122,7 @@ func (h *Handler) View() echo.HandlerFunc {
 
 func (h *Handler) Delete() echo.HandlerFunc {
 	return func(c *echo.Context) error {
-		userID, err := ezhandler.GetUserID(c.Request().Context())
+		userID, err := h.Auth.GetUserID(c.Request().Context())
 		if err != nil || userID == "" {
 			return c.Redirect(http.StatusFound, "/auth/login")
 		}

@@ -1,7 +1,7 @@
 package ui 
 
 import (
-	"github.com/josuebrunel/ezauth/pkg/handler"
+	"github.com/josuebrunel/ezauth"
 	"github.com/josuebrunel/gopkg/component"
 	"github.com/josuebrunel/gopkg/etr"
 )
@@ -12,64 +12,97 @@ templ Head() {
 		<title>DeepSitePrompt</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
-		<link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.23/dist/full.min.css" rel="stylesheet" type="text/css"/>
-		<script src="https://cdn.tailwindcss.com"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"/>
 		<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet"/>
 		<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 		<style>
-			body {
-				font-family: 'Open Sans', system-ui, -apple-system, sans-serif;
+			:root {
+				/* DaisyUI Flair Variables */
+				--pico-font-family: 'Open Sans', system-ui, -apple-system, sans-serif;
+				--pico-border-radius: 0.75rem;
+				--pico-primary: #4f46e5;
+				--pico-primary-hover: #4338ca;
+				--pico-primary-focus: rgba(79, 70, 229, 0.2);
+				--pico-del-color: #ef4444; /* red-500 equivalent */
 			}
-            .page-row {
-                display: flex;
-                gap: 0.5rem;
-                margin-bottom: 0.5rem;
-                align-items: center;
-            }
-            .page-row input {
-                flex: 1;
-            }
+			
+			/* Global soft background similar to bg-base-200 */
+			body {
+				background-color: var(--pico-background-color);
+				/* Slightly darker background for depth if needed, here relying on Pico's default */
+			}
+			
+			/* DaisyUI Card look for articles */
+			article {
+				box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+				border: 1px solid var(--pico-muted-border-color);
+				margin-bottom: var(--pico-spacing);
+			}
+
+			/* Navbar styling */
+			nav {
+				border-bottom: 1px solid var(--pico-muted-border-color);
+				background-color: var(--pico-card-background-color);
+				padding: 0.5rem var(--pico-spacing);
+				box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); /* shadow-md equivalent */
+				margin-bottom: calc(var(--pico-spacing) * 2);
+			}
+			
+			nav .brand {
+				font-weight: 800;
+				font-size: 1.25rem;
+				color: var(--pico-primary);
+				text-decoration: none;
+			}
+			
+			/* AlpineJS pages row fix */
+			.page-row {
+				display: flex;
+				gap: 0.5rem;
+				margin-bottom: 0.5rem;
+				align-items: center;
+			}
+			.page-row input {
+				flex: 1;
+				margin-bottom: 0;
+			}
         </style>
 	</head>
 }
 
 templ Navbar() {
-	<div class="navbar bg-base-100 shadow-md">
-		<div class="navbar-start">
-			<a href="/" class="btn btn-ghost text-xl text-primary font-bold">
-				<i class="fas fa-layer-group mr-2"></i> DeepSitePrompt
-			</a>
-		</div>
-		<div class="navbar-end">
-			if _, err := handler.GetUserID(ctx); err == nil {
-				<div class="dropdown dropdown-end">
-					<div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar placeholder">
-						<div class="bg-neutral text-neutral-content rounded-full w-10">
-							<span class="text-xs"><i class="fas fa-user"></i></span>
-						</div>
-					</div>
-					<ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-						<li><a href="/prompts">My Prompts</a></li>
-						<li><a href="/auth/logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
-					</ul>
-				</div>
+	<nav>
+		<ul>
+			<li><a href="/" class="brand"><i class="fas fa-layer-group margin-right-2"></i> DeepSitePrompt</a></li>
+		</ul>
+		<ul>
+			if _, err := ezauth.GetUserID(ctx); err == nil {
+				<li>
+					<details class="dropdown">
+						<summary role="button" class="outline">Account</summary>
+						<ul dir="rtl">
+							<li><a href="/prompts">My Prompts</a></li>
+							<li><a href="/auth/logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
+						</ul>
+					</details>
+				</li>
 				<form id="logout-form" action="/auth/logout" method="POST" style="display: none;">
 					@component.InputCSRF(etr.GetCSRF(ctx))
 				</form>
 			} else {
-				<a href="/auth/login" class="btn btn-ghost">Login</a>
-				<a href="/auth/register" class="btn btn-primary">Register</a>
+				<li><a href="/auth/login" class="secondary">Login</a></li>
+				<li><a href="/auth/register" role="button">Register</a></li>
 			}
-		</div>
-	</div>
+		</ul>
+	</nav>
 }
 
 templ Layout() {
 	<html>
 		@Head()
-		<body class="bg-base-200 min-h-screen">
+		<body>
 			@Navbar()
-			<main class="container mx-auto px-4 py-8">
+			<main class="container">
 				<div id="content">
 					{ children... }
 				</div>
